@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Real Estate Price Predictor</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #4f46e5, #9333ea, #ec4899);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 500px;
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(15px);
+            border-radius: 25px;
+            padding: 40px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            animation: popup 1s ease;
+            color: white;
+        }
+
+        @keyframes popup {
+            0% {
+                transform: scale(0.5);
+                opacity: 0;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 25px;
+            font-size: 32px;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        input {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 18px;
+            border: none;
+            border-radius: 12px;
+            font-size: 15px;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        input:focus {
+            transform: scale(1.03);
+            box-shadow: 0 0 12px rgba(255,255,255,0.7);
+        }
+
+        button {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 12px;
+            background: linear-gradient(90deg, #06b6d4, #3b82f6);
+            color: white;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        }
+
+        .result {
+            margin-top: 25px;
+            background: rgba(255,255,255,0.2);
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            font-size: 22px;
+            font-weight: 600;
+            animation: glow 1s infinite alternate;
+        }
+
+        @keyframes glow {
+            from {
+                box-shadow: 0 0 10px rgba(255,255,255,0.3);
+            }
+            to {
+                box-shadow: 0 0 25px rgba(255,255,255,0.8);
+            }
+        }
+
+        .floating-circle {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.1);
+            animation: float 10s linear infinite;
+        }
+
+        .circle1 {
+            width: 120px;
+            height: 120px;
+            top: 10%;
+            left: 10%;
+        }
+
+        .circle2 {
+            width: 200px;
+            height: 200px;
+            bottom: 10%;
+            right: 10%;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-30px);
+            }
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="floating-circle circle1"></div>
+    <div class="floating-circle circle2"></div>
+
+    <div class="container">
+
+        <h1>🏡 AI Real Estate Predictor</h1>
+
+        <p class="subtitle">
+            Predict house prices using Machine Learning and AI
+        </p>
+
+        <form action="/predict" method="POST">
+
+            <input type="number" name="OverallQual" placeholder="Overall Quality" required>
+
+            <input type="number" name="GrLivArea" placeholder="Ground Living Area" required>
+
+            <input type="number" name="GarageCars" placeholder="Garage Capacity" required>
+
+            <input type="number" name="TotalBsmtSF" placeholder="Basement Area" required>
+
+            <input type="number" name="FullBath" placeholder="Full Bathrooms" required>
+
+            <input type="number" name="YearBuilt" placeholder="Year Built" required>
+
+            <button type="submit">Predict House Price 🚀</button>
+
+        </form>
+
+        {% if prediction_text %}
+        <div class="result">
+            {{ prediction_text }}
+        </div>
+        {% endif %}
+
+    </div>
+
+</body>
+</html>
