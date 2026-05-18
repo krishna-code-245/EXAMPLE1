@@ -1,19 +1,25 @@
 import pandas as pd
-from sklearn.model_selection import train_test_split
-from sklearn.linear_model import LinearRegression
 import joblib
+
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.metrics import r2_score
 
 # Load dataset
 df = pd.read_csv("train.csv")
 
-# Features used for prediction
-X = df[['OverallQual', 'GrLivArea', 'GarageCars',
-        'TotalBsmtSF', 'FullBath', 'YearBuilt']]
+# Features
+X = df[['OverallQual',
+        'GrLivArea',
+        'GarageCars',
+        'TotalBsmtSF',
+        'FullBath',
+        'YearBuilt']]
 
-# Target column
+# Target
 y = df['SalePrice']
 
-# Split data
+# Split dataset
 X_train, X_test, y_train, y_test = train_test_split(
     X,
     y,
@@ -21,13 +27,23 @@ X_train, X_test, y_train, y_test = train_test_split(
     random_state=42
 )
 
-# Create model
-model = LinearRegression()
+# Create better AI model
+model = RandomForestRegressor(
+    n_estimators=200,
+    random_state=42
+)
 
 # Train model
 model.fit(X_train, y_train)
 
-# Save model
+# Test accuracy
+predictions = model.predict(X_test)
+
+score = r2_score(y_test, predictions)
+
+print(f"Model Accuracy: {score}")
+
+# Save trained model
 joblib.dump(model, 'house_price_model.pkl')
 
-print("Model trained and saved successfully")
+print("Better AI model saved successfully")
